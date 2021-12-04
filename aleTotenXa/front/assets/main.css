@@ -1,0 +1,23 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+body {
+    width: 95%;
+    height: 95%;
+}
+
+img {
+    max-width: 1240px;
+    max-height: 768px;
+}
+
+.totem {
+    border: solid;
+    width: 30px;
+    height: 50px;
+    position: absolute;
+    top: 341px;
+    left: 601px;
+    border-radius: 25px;
+}
