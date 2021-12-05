@@ -32,6 +32,7 @@ document.querySelector(".totem").onclick = () => {
           })
             .then(function (response) {
               console.log(response);
+              appendElement(response.data)
             })
             .catch(function (error) {
               console.log(error);
@@ -44,4 +45,10 @@ document.querySelector(".totem").onclick = () => {
       }, 3000)
       handleSuccess(stream);
     });
+}
+
+function appendElement(src) {
+  const targetElement = document.getElementById('target');
+  const newPhoto = `<img src="${src}" />`;
+  targetElement.innerHTML += newPhoto;
 }

@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs')
 const connectionUtils = require('../connection')
 const dataHandler = require('../data')
+const gcloudBucket = require('../gCloudBucket');
 module.exports = () => {
   const app = express();
 
@@ -15,10 +15,12 @@ module.exports = () => {
   app.post('/api/postAudio', async (req, res) => {
     const response = await connectionUtils.doRequest(3002, req.body.data)
     const formattedResponse = dataHandler.formatData(response)
-    console.log(formattedResponse)
-    console.log(formattedResponse.alternatives)
     const recognition = formattedResponse.alternatives[0];
     console.log('Recognized word -> ', recognition.text)
+    const gcloudResponse = gcloudBucket.doSearch(recognition.text);
+    console.log('gCloud -> ', gcloudResponse)
+
+    res.send(gcloudResponse);
   });
 
   return app;
