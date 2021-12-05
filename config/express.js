@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs')
-
+const connectionUtils = require('../connection')
+const dataHandler = require('../data')
 module.exports = () => {
   const app = express();
 
@@ -11,12 +12,13 @@ module.exports = () => {
 
   app.use(cors());
   
-  app.post('/api/postAudio', (req, res) => {
-    console.log(req.body);
-    fs.writeFileSync('audiSample.txt', req.body.data);
-    fs.writeFileSync('file.ogg', Buffer.from(req.body.data.replace('data:audio/ogg; codecs=opus;base64,', ''), 'base64'));
-
-    res.send('POST request to the homepage');
+  app.post('/api/postAudio', async (req, res) => {
+    const response = await connectionUtils.doRequest(3002, req.body.data)
+    const formattedResponse = dataHandler.formatData(response)
+    console.log(formattedResponse)
+    console.log(formattedResponse.alternatives)
+    const recognition = formattedResponse.alternatives[0];
+    console.log('Recognized word -> ', recognition.text)
   });
 
   return app;
