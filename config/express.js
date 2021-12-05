@@ -19,7 +19,6 @@ module.exports = () => {
     console.log('Recognized word -> ', recognition.text)
     const gcloudResponse = gcloudBucket.doSearch(recognition.text);
     console.log('gCloud -> ', gcloudResponse)
-
     res.send(gcloudResponse);
   });
 
